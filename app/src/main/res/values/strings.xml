@@ -3,4 +3,12 @@
     <string name="calc_input_hint">Введите реагирующие вещества, разделяя их знаком +</string>
     <string name="calc_result_button">Результат</string>
     <string name="calc_not_found">Реакция не найдена</string>
+    <string name="app_bar_info">Инфо</string>
+    <string name="app_bar_back">Назад</string>
+    <string name="info">Приложение разработано в любительских целях, за корректность данных автор ответственности не несёт.\n\n
+
+        Используйте пробел для добавления знака +\n
+        Используйте ввод для поиска подходящих реакций\n\n
+
+        Приложение умеет находить формулы реакций для двух указанных веществ</string>
 </resources>
