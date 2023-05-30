@@ -35,18 +35,12 @@ class CalculatorViewModel @Inject constructor(
     fun input(input: String) = intent {
         var resultInput = input
         resultInput = resultInput.replace(' ', '+')
-        if (resultInput.contains('\n')) {
-            resultInput = resultInput.replace("\n", "")
-            postSideEffect(CalculatorSideEffect.HideKeyboard)
-            search()
-        }
-        resultInput = formatter.toReaction(resultInput)
         reduce { state.copy(input = resultInput) }
     }
 
     fun search() = intent {
-        val request = formatter.fromReaction(state.input)
-        val reactions = reactionRepository.findReactions(request).map { reaction ->
+        postSideEffect(CalculatorSideEffect.HideKeyboard)
+        val reactions = reactionRepository.findReactions(state.input).map { reaction ->
             formatter.toReaction(reaction)
         }
         reduce {
