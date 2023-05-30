@@ -3,7 +3,9 @@ package ru.spacestar.chem
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.HelpOutline
@@ -18,16 +20,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.yandex.mobile.ads.banner.AdSize
+import com.yandex.mobile.ads.banner.BannerAdView
+import com.yandex.mobile.ads.common.AdRequest
 import dagger.hilt.android.AndroidEntryPoint
 import ru.spacestar.chem.navigation.Screen
 import ru.spacestar.chem.ui.calculator.view.Calculator
 import ru.spacestar.chem.ui.common.ChemAppBar
 import ru.spacestar.chem.ui.info.view.Info
 import ru.spacestar.chem.ui.theme.ChemTheme
+import ru.spacestar.chem.utils.ResourceExtensions.getScreenWidth
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -63,21 +70,33 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                     ) { contentPadding ->
-                        NavHost(
-                            navController = navController,
-                            Screen.Calculator.destination,
-                            modifier = Modifier.padding(contentPadding)
-                        ) {
-                            composable(Screen.Calculator.destination) {
-                                isStartScreen = true
-                                title = null
-                                Calculator(viewModel = hiltViewModel())
+                        Column(modifier = Modifier.fillMaxSize().padding(contentPadding)) {
+                            NavHost(
+                                navController = navController,
+                                Screen.Calculator.destination,
+                                modifier = Modifier.fillMaxWidth().weight(1f)
+                            ) {
+                                composable(Screen.Calculator.destination) {
+                                    isStartScreen = true
+                                    title = null
+                                    Calculator(viewModel = hiltViewModel())
+                                }
+                                composable(Screen.Info.destination) {
+                                    isStartScreen = false
+                                    title = stringResource(R.string.app_bar_info)
+                                    Info()
+                                }
                             }
-                            composable(Screen.Info.destination) {
-                                isStartScreen = false
-                                title = stringResource(R.string.app_bar_info)
-                                Info()
-                            }
+                            AndroidView(
+                                modifier = Modifier.fillMaxWidth(),
+                                factory = { context ->
+                                    BannerAdView(context).apply {
+                                        setAdUnitId(BuildConfig.YAD_ID)
+                                        setAdSize(AdSize.stickySize(context, context.getScreenWidth()))
+                                        loadAd(AdRequest.Builder().build())
+                                    }
+                                }
+                            )
                         }
                     }
                 }
