@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Chem</string>
+    <string name="calc_input_hint">Введите реагирующие вещества, разделяя их знаком +</string>
+    <string name="calc_result_button">Результат</string>
+    <string name="calc_not_found">Реакция не найдена</string>
+</resources>
