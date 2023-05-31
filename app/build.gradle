@@ -91,6 +91,7 @@ dependencies {
 
     // ads
     implementation 'com.yandex.android:mobileads:5.8.0'
+    implementation 'com.yandex.ads.mediation:mobileads-admob:21.5.0.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
