@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.yandex.mobile.ads.banner.AdSize
 import com.yandex.mobile.ads.banner.BannerAdView
@@ -29,16 +28,18 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.spacestar.calculator_api.CalculatorFeatureApi
 import ru.spacestar.chem.navigation.Screen
 import ru.spacestar.chem.ui.common.ChemAppBar
-import ru.spacestar.chem.ui.info.view.Info
 import ru.spacestar.core.utils.ResourceExtensions.getScreenWidth
 import ru.spacestar.core_ui.theme.ChemTheme
 import ru.spacestar.core_ui.utils.UiExtensions.isDestination
+import ru.spacestar.info_api.InfoFeatureApi
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @Inject
     lateinit var calculatorApi: CalculatorFeatureApi
+    @Inject
+    lateinit var infoApi: InfoFeatureApi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +66,9 @@ class MainActivity : ComponentActivity() {
                                     }) {
                                         Icon(
                                             imageVector = Icons.Outlined.HelpOutline,
-                                            contentDescription = stringResource(R.string.app_bar_info)
+                                            contentDescription = stringResource(
+                                                ru.spacestar.info_impl.R.string.info_title
+                                            )
                                         )
                                     }
                                 }
@@ -83,10 +86,7 @@ class MainActivity : ComponentActivity() {
                                     .weight(1f)
                             ) {
                                 calculatorApi.registerGraph(this, navController, title)
-                                composable(Screen.Info.destination) {
-                                    title.value = stringResource(R.string.app_bar_info)
-                                    Info()
-                                }
+                                infoApi.registerGraph(this, navController, title)
                             }
                             AndroidView(
                                 modifier = Modifier.fillMaxWidth(),
