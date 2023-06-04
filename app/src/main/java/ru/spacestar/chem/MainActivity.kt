@@ -26,12 +26,12 @@ import com.yandex.mobile.ads.banner.BannerAdView
 import com.yandex.mobile.ads.common.AdRequest
 import dagger.hilt.android.AndroidEntryPoint
 import ru.spacestar.calculator_api.CalculatorFeatureApi
-import ru.spacestar.chem.navigation.Screen
-import ru.spacestar.chem.ui.common.ChemAppBar
 import ru.spacestar.core.utils.ResourceExtensions.getScreenWidth
 import ru.spacestar.core_ui.theme.ChemTheme
 import ru.spacestar.core_ui.utils.UiExtensions.isDestination
+import ru.spacestar.core_ui.view.ChemAppBar
 import ru.spacestar.info_api.InfoFeatureApi
+import ru.spacestar.info_impl.R
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -62,12 +62,12 @@ class MainActivity : ComponentActivity() {
                             ) {
                                 if (isStartScreen) {
                                     IconButton(onClick = {
-                                        navController.navigate(Screen.Info.destination)
+                                        navController.navigate(infoApi.route())
                                     }) {
                                         Icon(
                                             imageVector = Icons.Outlined.HelpOutline,
                                             contentDescription = stringResource(
-                                                ru.spacestar.info_impl.R.string.info_title
+                                                R.string.info_title
                                             )
                                         )
                                     }
