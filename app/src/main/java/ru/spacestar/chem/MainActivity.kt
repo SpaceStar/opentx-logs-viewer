@@ -14,14 +14,11 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -29,15 +26,20 @@ import com.yandex.mobile.ads.banner.AdSize
 import com.yandex.mobile.ads.banner.BannerAdView
 import com.yandex.mobile.ads.common.AdRequest
 import dagger.hilt.android.AndroidEntryPoint
+import ru.spacestar.calculator_api.CalculatorFeatureApi
 import ru.spacestar.chem.navigation.Screen
-import ru.spacestar.chem.ui.calculator.view.Calculator
 import ru.spacestar.chem.ui.common.ChemAppBar
 import ru.spacestar.chem.ui.info.view.Info
-import ru.spacestar.chem.ui.theme.ChemTheme
-import ru.spacestar.chem.utils.ResourceExtensions.getScreenWidth
+import ru.spacestar.core.utils.ResourceExtensions.getScreenWidth
+import ru.spacestar.core_ui.theme.ChemTheme
+import ru.spacestar.core_ui.utils.UiExtensions.isDestination
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject
+    lateinit var calculatorApi: CalculatorFeatureApi
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -49,12 +51,12 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
                     val back: () -> Unit = { navController.popBackStack() }
-                    var isStartScreen by remember { mutableStateOf(true) }
-                    var title by remember { mutableStateOf<String?>(null) }
+                    val isStartScreen = navController.isDestination(calculatorApi.route())
+                    val title = remember { mutableStateOf<String?>(null) }
                     Scaffold(
                         topBar = {
                             ChemAppBar(
-                                title = title,
+                                title = title.value,
                                 onBackPressed = if (!isStartScreen) back else null,
                             ) {
                                 if (isStartScreen) {
@@ -70,20 +72,19 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                     ) { contentPadding ->
-                        Column(modifier = Modifier.fillMaxSize().padding(contentPadding)) {
+                        Column(modifier = Modifier
+                            .fillMaxSize()
+                            .padding(contentPadding)) {
                             NavHost(
                                 navController = navController,
-                                Screen.Calculator.destination,
-                                modifier = Modifier.fillMaxWidth().weight(1f)
+                                calculatorApi.route(),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .weight(1f)
                             ) {
-                                composable(Screen.Calculator.destination) {
-                                    isStartScreen = true
-                                    title = null
-                                    Calculator(viewModel = hiltViewModel())
-                                }
+                                calculatorApi.registerGraph(this, navController, title)
                                 composable(Screen.Info.destination) {
-                                    isStartScreen = false
-                                    title = stringResource(R.string.app_bar_info)
+                                    title.value = stringResource(R.string.app_bar_info)
                                     Info()
                                 }
                             }
@@ -92,7 +93,12 @@ class MainActivity : ComponentActivity() {
                                 factory = { context ->
                                     BannerAdView(context).apply {
                                         setAdUnitId(BuildConfig.YAD_ID)
-                                        setAdSize(AdSize.stickySize(context, context.getScreenWidth()))
+                                        setAdSize(
+                                            AdSize.stickySize(
+                                                context,
+                                                context.getScreenWidth()
+                                            )
+                                        )
                                         loadAd(AdRequest.Builder().build())
                                     }
                                 }

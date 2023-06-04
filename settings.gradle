@@ -14,3 +14,8 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Chem"
 include ':app'
+include ':core'
+include ':core-ui'
+include ':core-feature-api'
+include ':calculator-api'
+include ':calculator-impl'

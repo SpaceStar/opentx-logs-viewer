@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="calc_input_hint">Введите реагирующие вещества, разделяя их знаком +</string>
+    <string name="calc_result_button">Результат</string>
+    <string name="calc_not_found">Реакция не найдена</string>
+</resources>
