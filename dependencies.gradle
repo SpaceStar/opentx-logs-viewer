@@ -9,6 +9,7 @@ ext {
     hilt_version = '2.46.1'
     hilt_nav_version = '1.0.0'
     nav_version = "2.5.3"
+    nav_animation_version = "0.30.1"
     compose_compiler_version = "1.4.7"
     compose_activity_version = "1.7.2"
     compose_version = "2023.05.01"

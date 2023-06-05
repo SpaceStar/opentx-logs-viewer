@@ -54,6 +54,7 @@ dependencies {
 
     // navigation
     implementation "androidx.navigation:navigation-compose:$nav_version"
+    implementation "com.google.accompanist:accompanist-navigation-animation:$nav_animation_version"
 
     // Orbit MVI
     implementation("org.orbit-mvi:orbit-core:$orbit_version")
