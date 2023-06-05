@@ -37,6 +37,8 @@ android {
 }
 
 dependencies {
+    implementation project(':core')
+
     implementation "androidx.core:core-ktx:$core_ktx_version"
     implementation "androidx.activity:activity-compose:$compose_activity_version"
     implementation platform("androidx.compose:compose-bom:$compose_version")
@@ -46,5 +48,9 @@ dependencies {
     implementation 'androidx.compose.material3:material3'
     implementation 'androidx.compose.material:material-icons-extended'
 
+    // navigation
     implementation "androidx.navigation:navigation-compose:$nav_version"
+
+    // ads
+    implementation 'com.yandex.android:mobileads:5.8.0'
 }

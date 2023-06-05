@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import ru.spacestar.core_ui.R
 
@@ -19,6 +20,7 @@ import ru.spacestar.core_ui.R
 fun ChemAppBar(
     title: String? = null,
     onBackPressed: (() -> Unit)? = null,
+    backIcon: ImageVector = Icons.Filled.ArrowBack,
     actions: @Composable RowScope.() -> Unit = {}
 ) {
     TopAppBar(
@@ -34,7 +36,7 @@ fun ChemAppBar(
             if (onBackPressed != null) {
                 IconButton(onClick = onBackPressed) {
                     Icon(
-                        imageVector = Icons.Filled.ArrowBack,
+                        imageVector = backIcon,
                         contentDescription = stringResource(R.string.app_bar_back)
                     )
                 }

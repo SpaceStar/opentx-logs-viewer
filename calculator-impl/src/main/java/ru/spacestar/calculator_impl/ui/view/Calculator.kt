@@ -6,7 +6,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.HelpOutline
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,6 +31,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 import ru.spacestar.calculator_impl.R
@@ -34,9 +40,13 @@ import ru.spacestar.calculator_impl.ui.business.CalculatorSideEffect
 import ru.spacestar.calculator_impl.ui.business.CalculatorViewModel
 import ru.spacestar.calculator_impl.utils.ReactionFormatter
 import ru.spacestar.core_ui.theme.ChemTheme
+import ru.spacestar.core_ui.view.BaseAppBarScreen
 
 @Composable
-internal fun Calculator(viewModel: CalculatorViewModel) {
+internal fun Calculator(
+    navController: NavController,
+    viewModel: CalculatorViewModel
+) {
     val state by viewModel.collectAsState()
     var localInput by remember { mutableStateOf(state.input) }
     val filter = remember { Regex("""[^\dA-Za-z+ ]""") }
@@ -47,49 +57,70 @@ internal fun Calculator(viewModel: CalculatorViewModel) {
         when (it) {
             CalculatorSideEffect.RequestFocus -> focusRequester.requestFocus()
             CalculatorSideEffect.HideKeyboard -> focusManager.clearFocus()
+            is CalculatorSideEffect.Navigate -> navController.navigate(it.route)
         }
     }
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(16.dp)
-    ) {
-        OutlinedTextField(
-            value = localInput,
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(
-                autoCorrect = false,
-                imeAction = ImeAction.Search
-            ),
-            keyboardActions = KeyboardActions { viewModel.search() },
-            visualTransformation = ReactionTransform(),
-            label = { Text(stringResource(id = R.string.calc_input_hint)) },
-            onValueChange = {
-                if (it.contains('\n')) {
-                    viewModel.search()
-                    return@OutlinedTextField
-                }
-                if (filter.containsMatchIn(it)) return@OutlinedTextField
-                localInput = it
-                viewModel.input(it) },
+    BaseAppBarScreen(
+        navController = navController,
+        isBackEnabled = false,
+        appBarMenu = {
+            IconButton(onClick = {
+                viewModel.navigateInfo()
+            }) {
+                Icon(
+                    imageVector = Icons.Outlined.HelpOutline,
+                    contentDescription = stringResource(
+                        ru.spacestar.info_api.R.string.info_title
+                    )
+                )
+            }
+        }
+    ) { paddingValues ->
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .focusRequester(focusRequester)
-        )
-        Text(
-            text = state.result,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp)
-                .weight(1f)
-        )
-        Button(
-            onClick = { viewModel.search() },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp)
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(16.dp)
         ) {
-            Text(text = stringResource(id = R.string.calc_result_button))
+            OutlinedTextField(
+                value = localInput,
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(
+                    autoCorrect = false,
+                    imeAction = ImeAction.Search
+                ),
+                keyboardActions = KeyboardActions { viewModel.search() },
+                visualTransformation = ReactionTransform(),
+                label = { Text(stringResource(id = R.string.calc_input_hint)) },
+                onValueChange = {
+                    if (it.contains('\n')) {
+                        viewModel.search()
+                        return@OutlinedTextField
+                    }
+                    if (filter.containsMatchIn(it)) return@OutlinedTextField
+                    localInput = it
+                    viewModel.input(it)
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .focusRequester(focusRequester)
+            )
+            Text(
+                text = state.result,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp)
+                    .weight(1f)
+            )
+            Button(
+                onClick = { viewModel.search() },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp)
+            ) {
+                Text(text = stringResource(id = R.string.calc_result_button))
+            }
         }
     }
 }
@@ -108,6 +139,6 @@ private class ReactionTransform : VisualTransformation {
 @Composable
 private fun Preview() {
     ChemTheme {
-        Calculator(viewModel())
+        Calculator(rememberNavController(), viewModel())
     }
 }

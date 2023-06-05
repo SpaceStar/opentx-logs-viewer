@@ -56,7 +56,6 @@ android {
 }
 
 dependencies {
-    implementation project(':core')
     implementation project(':core-ui')
     implementation project(':calculator-api')
     implementation project(':calculator-impl')

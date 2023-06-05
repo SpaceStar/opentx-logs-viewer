@@ -6,32 +6,18 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.HelpOutline
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.viewinterop.AndroidView
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.yandex.mobile.ads.banner.AdSize
-import com.yandex.mobile.ads.banner.BannerAdView
-import com.yandex.mobile.ads.common.AdRequest
 import dagger.hilt.android.AndroidEntryPoint
 import ru.spacestar.calculator_api.CalculatorFeatureApi
-import ru.spacestar.core.utils.ResourceExtensions.getScreenWidth
 import ru.spacestar.core_ui.theme.ChemTheme
-import ru.spacestar.core_ui.utils.UiExtensions.isDestination
-import ru.spacestar.core_ui.view.ChemAppBar
+import ru.spacestar.core_ui.view.AdBanner
 import ru.spacestar.info_api.InfoFeatureApi
-import ru.spacestar.info_impl.R
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -40,6 +26,11 @@ class MainActivity : ComponentActivity() {
     lateinit var calculatorApi: CalculatorFeatureApi
     @Inject
     lateinit var infoApi: InfoFeatureApi
+
+    private fun NavGraphBuilder.registerNavGraphs(navController: NavController) {
+        calculatorApi.registerGraph(this, navController)
+        infoApi.registerGraph(this, navController)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,60 +41,24 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val navController = rememberNavController()
-                    val back: () -> Unit = { navController.popBackStack() }
-                    val isStartScreen = navController.isDestination(calculatorApi.route())
-                    val title = remember { mutableStateOf<String?>(null) }
-                    Scaffold(
-                        topBar = {
-                            ChemAppBar(
-                                title = title.value,
-                                onBackPressed = if (!isStartScreen) back else null,
-                            ) {
-                                if (isStartScreen) {
-                                    IconButton(onClick = {
-                                        navController.navigate(infoApi.route())
-                                    }) {
-                                        Icon(
-                                            imageVector = Icons.Outlined.HelpOutline,
-                                            contentDescription = stringResource(
-                                                R.string.info_title
-                                            )
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    ) { contentPadding ->
-                        Column(modifier = Modifier
+                    Column(
+                        modifier = Modifier
                             .fillMaxSize()
-                            .padding(contentPadding)) {
-                            NavHost(
-                                navController = navController,
-                                calculatorApi.route(),
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .weight(1f)
-                            ) {
-                                calculatorApi.registerGraph(this, navController, title)
-                                infoApi.registerGraph(this, navController, title)
-                            }
-                            AndroidView(
-                                modifier = Modifier.fillMaxWidth(),
-                                factory = { context ->
-                                    BannerAdView(context).apply {
-                                        setAdUnitId(BuildConfig.YAD_ID)
-                                        setAdSize(
-                                            AdSize.stickySize(
-                                                context,
-                                                context.getScreenWidth()
-                                            )
-                                        )
-                                        loadAd(AdRequest.Builder().build())
-                                    }
-                                }
-                            )
+                    ) {
+                        val navController = rememberNavController()
+                        NavHost(
+                            navController = navController,
+                            startDestination = calculatorApi.route(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f)
+                        ) {
+                            registerNavGraphs(navController)
                         }
+                        AdBanner(
+                            modifier = Modifier.fillMaxWidth(),
+                            unitId = BuildConfig.YAD_ID
+                        )
                     }
                 }
             }

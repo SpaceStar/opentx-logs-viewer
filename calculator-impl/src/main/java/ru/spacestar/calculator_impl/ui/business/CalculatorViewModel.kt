@@ -14,13 +14,15 @@ import org.orbitmvi.orbit.viewmodel.container
 import ru.spacestar.calculator_impl.R
 import ru.spacestar.calculator_impl.utils.ReactionFormatter
 import ru.spacestar.core.utils.ResourceExtensions.getString
+import ru.spacestar.info_api.InfoFeatureApi
 import javax.inject.Inject
 
 @HiltViewModel
 internal class CalculatorViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     @ApplicationContext context: Context,
-    private val reactionRepository: ReactionRepository
+    private val reactionRepository: ReactionRepository,
+    private val infoApi: InfoFeatureApi,
 ) : AndroidViewModel(context as Application), ContainerHost<CalculatorState, CalculatorSideEffect> {
 
     private val formatter by lazy { ReactionFormatter() }
@@ -47,5 +49,9 @@ internal class CalculatorViewModel @Inject constructor(
             state.copy(result = reactions.ifEmpty { listOf(getString(R.string.calc_not_found)) }
                 .joinToString(separator = "\n\n"))
         }
+    }
+
+    fun navigateInfo() = intent {
+        postSideEffect(CalculatorSideEffect.Navigate(infoApi.route()))
     }
 }

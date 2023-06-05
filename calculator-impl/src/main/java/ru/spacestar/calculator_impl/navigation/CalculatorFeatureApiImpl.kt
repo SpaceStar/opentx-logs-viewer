@@ -1,6 +1,5 @@
 package ru.spacestar.calculator_impl.navigation
 
-import androidx.compose.runtime.MutableState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -18,12 +17,10 @@ internal class CalculatorFeatureApiImpl @Inject constructor() : CalculatorFeatur
 
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
-        navController: NavController,
-        title: MutableState<String?>?
+        navController: NavController
     ) {
         navGraphBuilder.composable(BASE_ROUTE) {
-            title?.value = null
-            Calculator(viewModel = hiltViewModel())
+            Calculator(navController, hiltViewModel())
         }
     }
 }
