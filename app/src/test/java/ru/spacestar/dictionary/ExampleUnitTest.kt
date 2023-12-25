@@ -1,4 +1,4 @@
-package ru.spacestar.chem
+package ru.spacestar.dictionary
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

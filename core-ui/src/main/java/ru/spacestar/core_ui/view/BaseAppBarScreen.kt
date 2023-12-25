@@ -21,7 +21,7 @@ fun BaseAppBarScreen(
 ) {
     Scaffold(
         topBar = {
-            ChemAppBar(
+            DictionaryAppBar(
                 title = title,
                 backIcon = backIcon,
                 onBackPressed = if (isBackEnabled) onBackPressed else null,

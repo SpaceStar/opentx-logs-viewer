@@ -39,7 +39,7 @@ import ru.spacestar.calculator_impl.R
 import ru.spacestar.calculator_impl.ui.business.CalculatorSideEffect
 import ru.spacestar.calculator_impl.ui.business.CalculatorViewModel
 import ru.spacestar.calculator_impl.utils.ReactionFormatter
-import ru.spacestar.core_ui.theme.ChemTheme
+import ru.spacestar.core_ui.theme.DictionaryTheme
 import ru.spacestar.core_ui.view.BaseAppBarScreen
 
 @Composable
@@ -138,7 +138,7 @@ private class ReactionTransform : VisualTransformation {
 @Preview
 @Composable
 private fun Preview() {
-    ChemTheme {
+    DictionaryTheme {
         Calculator(rememberNavController(), viewModel())
     }
 }

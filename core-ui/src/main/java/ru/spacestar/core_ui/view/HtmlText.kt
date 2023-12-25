@@ -8,7 +8,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.tooling.preview.Preview
 import ru.spacestar.core.utils.AnnotatedStringHelper
 import ru.spacestar.core.utils.HtmlHelper
-import ru.spacestar.core_ui.theme.ChemTheme
+import ru.spacestar.core_ui.theme.DictionaryTheme
 
 @Composable
 fun HtmlText(
@@ -32,7 +32,7 @@ fun HtmlText(
 @Preview
 @Composable
 fun HtmlTextPreview() {
-    ChemTheme {
+    DictionaryTheme {
         HtmlText(html = "Hello <a href=\"http://google.com\">from</a> " +
                 "my <a href=\"https://vk.com\">brother</a> Bob")
     }

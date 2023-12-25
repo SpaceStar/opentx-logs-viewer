@@ -1,4 +1,4 @@
-package ru.spacestar.chem
+package ru.spacestar.dictionary
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -20,7 +20,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.spacestar.calculator_api.CalculatorFeatureApi
-import ru.spacestar.core_ui.theme.ChemTheme
+import ru.spacestar.core_ui.theme.DictionaryTheme
 import ru.spacestar.core_ui.view.AdBanner
 import ru.spacestar.info_api.InfoFeatureApi
 import ru.spacestar.periodic_table_api.PeriodicTableFeatureApi
@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ChemTheme {
+            DictionaryTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),

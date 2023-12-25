@@ -17,7 +17,7 @@ import ru.spacestar.core_ui.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChemAppBar(
+fun DictionaryAppBar(
     title: String? = null,
     onBackPressed: (() -> Unit)? = null,
     backIcon: ImageVector = Icons.Filled.ArrowBack,
