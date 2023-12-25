@@ -3,9 +3,8 @@ package ru.spacestar.chem
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection
 import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.AnimationConstants
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeOut
@@ -17,8 +16,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.spacestar.calculator_api.CalculatorFeatureApi
 import ru.spacestar.core_ui.theme.ChemTheme
@@ -46,7 +45,6 @@ class MainActivity : ComponentActivity() {
         periodicTableApi.registerGraph(this, navController)
     }
 
-    @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -60,12 +58,12 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier
                             .fillMaxSize()
                     ) {
-                        val navController = rememberAnimatedNavController()
-                        AnimatedNavHost(
+                        val navController = rememberNavController()
+                        NavHost(
                             navController = navController,
                             startDestination = startDestination,
                             enterTransition = {
-                                slideIntoContainer(AnimatedContentScope.SlideDirection.Start) },
+                                slideIntoContainer(SlideDirection.Start) },
                             exitTransition = {
                                 fadeOut(animationSpec = tween(
                                     durationMillis = 1,
@@ -73,7 +71,7 @@ class MainActivity : ComponentActivity() {
                                 )) },
                             popEnterTransition = { EnterTransition.None },
                             popExitTransition = {
-                                slideOutOfContainer(AnimatedContentScope.SlideDirection.End) },
+                                slideOutOfContainer(SlideDirection.End) },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .weight(1f)
