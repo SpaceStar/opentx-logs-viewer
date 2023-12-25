@@ -1,37 +1,25 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id 'kotlin-parcelize'
-    id 'com.google.dagger.hilt.android'
 }
 
 android {
-    namespace 'ru.spacestar.chem'
+    namespace 'ru.spacestar.periodic_table_impl'
     compileSdk target_sdk
 
     defaultConfig {
-        applicationId "ru.spacestar.chem"
         minSdk min_sdk
         targetSdk target_sdk
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary true
-        }
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
-        debug {
-            buildConfigField 'String', 'YAD_ID', '"demo-banner-yandex"'
-        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-
-            buildConfigField 'String', 'YAD_ID', '"R-M-2416833-1"'
         }
     }
     compileOptions {
@@ -42,27 +30,16 @@ android {
         jvmTarget = '17'
     }
     buildFeatures {
-        buildConfig true
         compose true
     }
     composeOptions {
         kotlinCompilerExtensionVersion compose_compiler_version
     }
-    packagingOptions {
-        resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
-        }
-    }
 }
 
 dependencies {
     implementation project(':core-ui')
-    implementation project(':calculator-api')
-    implementation project(':calculator-impl')
-    implementation project(':info-api')
-    implementation project(':info-impl')
     implementation project(':periodic-table-api')
-    implementation project(':periodic-table-impl')
 
     implementation "androidx.core:core-ktx:$core_ktx_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
@@ -79,29 +56,13 @@ dependencies {
     implementation "androidx.navigation:navigation-compose:$nav_version"
     implementation "com.google.accompanist:accompanist-navigation-animation:$nav_animation_version"
 
-    // retrofit
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    // Orbit MVI
+    implementation("org.orbit-mvi:orbit-core:$orbit_version")
+    implementation("org.orbit-mvi:orbit-viewmodel:$orbit_version")
+    implementation("org.orbit-mvi:orbit-compose:$orbit_version")
 
     // hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     implementation "androidx.hilt:hilt-navigation-compose:$hilt_nav_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
-
-    // ads
-    implementation 'com.yandex.android:mobileads:5.8.0'
-    implementation 'com.yandex.ads.mediation:mobileads-admob:21.5.0.0'
-
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation platform("androidx.compose:compose-bom:$compose_version")
-    androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
-
-    debugImplementation 'androidx.compose.ui:ui-tooling'
-    debugImplementation 'androidx.compose.ui:ui-test-manifest'
-}
-
-// Allow references to generated code
-kapt {
-    correctErrorTypes true
 }

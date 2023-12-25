@@ -24,6 +24,7 @@ import ru.spacestar.calculator_api.CalculatorFeatureApi
 import ru.spacestar.core_ui.theme.ChemTheme
 import ru.spacestar.core_ui.view.AdBanner
 import ru.spacestar.info_api.InfoFeatureApi
+import ru.spacestar.periodic_table_api.PeriodicTableFeatureApi
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -32,10 +33,17 @@ class MainActivity : ComponentActivity() {
     lateinit var calculatorApi: CalculatorFeatureApi
     @Inject
     lateinit var infoApi: InfoFeatureApi
+    @Inject
+    lateinit var periodicTableApi: PeriodicTableFeatureApi
+
+    private val startDestination: String
+        get() = calculatorApi.route()
+//        get() = periodicTableApi.route()
 
     private fun NavGraphBuilder.registerNavGraphs(navController: NavController) {
         calculatorApi.registerGraph(this, navController)
         infoApi.registerGraph(this, navController)
+        periodicTableApi.registerGraph(this, navController)
     }
 
     @OptIn(ExperimentalAnimationApi::class)
@@ -55,7 +63,7 @@ class MainActivity : ComponentActivity() {
                         val navController = rememberAnimatedNavController()
                         AnimatedNavHost(
                             navController = navController,
-                            startDestination = calculatorApi.route(),
+                            startDestination = startDestination,
                             enterTransition = {
                                 slideIntoContainer(AnimatedContentScope.SlideDirection.Start) },
                             exitTransition = {
