@@ -14,7 +14,7 @@ import org.orbitmvi.orbit.viewmodel.container
 import ru.spacestar.calculator_impl.R
 import ru.spacestar.calculator_impl.utils.ReactionFormatter
 import ru.spacestar.core.utils.ResourceExtensions.getString
-import ru.spacestar.info_api.InfoFeatureApi
+import ru.spacestar.core_feature_api.InfoFeatureApi
 import javax.inject.Inject
 
 @HiltViewModel

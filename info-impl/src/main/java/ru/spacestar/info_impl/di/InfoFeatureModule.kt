@@ -4,7 +4,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import ru.spacestar.info_api.InfoFeatureApi
+import ru.spacestar.core_feature_api.InfoFeatureApi
 import ru.spacestar.info_impl.navigation.InfoFeatureApiImpl
 
 @Module

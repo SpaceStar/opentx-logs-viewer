@@ -71,7 +71,7 @@ internal fun Calculator(
                 Icon(
                     imageVector = Icons.Outlined.HelpOutline,
                     contentDescription = stringResource(
-                        ru.spacestar.info_api.R.string.info_title
+                        ru.spacestar.core_feature_api.R.string.info_title
                     )
                 )
             }

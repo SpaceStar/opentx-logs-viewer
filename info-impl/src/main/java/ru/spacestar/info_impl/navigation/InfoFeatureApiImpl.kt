@@ -3,7 +3,7 @@ package ru.spacestar.info_impl.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import ru.spacestar.info_api.InfoFeatureApi
+import ru.spacestar.core_feature_api.InfoFeatureApi
 import ru.spacestar.info_impl.ui.view.Info
 import javax.inject.Inject
 

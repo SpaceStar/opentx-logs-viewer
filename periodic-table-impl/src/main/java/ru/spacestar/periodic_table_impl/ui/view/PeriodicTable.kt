@@ -11,7 +11,7 @@ internal fun PeriodicTable(
 ) {
     BaseAppBarScreen(
         navController = navController,
-        title = stringResource(id = ru.spacestar.periodic_table_api.R.string.periodic_table_title)
+        title = stringResource(id = ru.spacestar.core_feature_api.R.string.periodic_table_title)
     ) { paddingValues ->
 
     }

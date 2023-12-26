@@ -57,11 +57,9 @@ android {
 
 dependencies {
     implementation project(':core-ui')
-    implementation project(':calculator-api')
+    implementation project(':core-feature-api')
     implementation project(':calculator-impl')
-    implementation project(':info-api')
     implementation project(':info-impl')
-    implementation project(':periodic-table-api')
     implementation project(':periodic-table-impl')
 
     implementation "androidx.core:core-ktx:$core_ktx_version"

@@ -19,11 +19,11 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import ru.spacestar.calculator_api.CalculatorFeatureApi
+import ru.spacestar.core_feature_api.CalculatorFeatureApi
+import ru.spacestar.core_feature_api.InfoFeatureApi
+import ru.spacestar.core_feature_api.PeriodicTableFeatureApi
 import ru.spacestar.core_ui.theme.DictionaryTheme
 import ru.spacestar.core_ui.view.AdBanner
-import ru.spacestar.info_api.InfoFeatureApi
-import ru.spacestar.periodic_table_api.PeriodicTableFeatureApi
 import javax.inject.Inject
 
 @AndroidEntryPoint

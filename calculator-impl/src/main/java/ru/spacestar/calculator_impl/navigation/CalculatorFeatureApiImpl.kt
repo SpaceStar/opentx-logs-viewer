@@ -4,8 +4,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import ru.spacestar.calculator_api.CalculatorFeatureApi
 import ru.spacestar.calculator_impl.ui.view.Calculator
+import ru.spacestar.core_feature_api.CalculatorFeatureApi
 import javax.inject.Inject
 
 internal class CalculatorFeatureApiImpl @Inject constructor() : CalculatorFeatureApi {

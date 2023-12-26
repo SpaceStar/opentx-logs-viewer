@@ -14,7 +14,7 @@ import ru.spacestar.info_impl.R
 internal fun Info(navController: NavController) {
     BaseAppBarScreen(
         navController = navController,
-        title = stringResource(id = ru.spacestar.info_api.R.string.info_title)
+        title = stringResource(id = ru.spacestar.core_feature_api.R.string.info_title)
     ) { paddingValues ->
         HtmlText(
             html = stringResource(id = R.string.info),
