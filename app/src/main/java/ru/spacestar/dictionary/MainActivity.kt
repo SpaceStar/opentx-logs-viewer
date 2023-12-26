@@ -19,6 +19,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
+import ru.spacestar.core_feature_api.AuthorizationFeatureApi
 import ru.spacestar.core_feature_api.CalculatorFeatureApi
 import ru.spacestar.core_feature_api.InfoFeatureApi
 import ru.spacestar.core_feature_api.PeriodicTableFeatureApi
@@ -34,10 +35,12 @@ class MainActivity : ComponentActivity() {
     lateinit var infoApi: InfoFeatureApi
     @Inject
     lateinit var periodicTableApi: PeriodicTableFeatureApi
+    @Inject
+    lateinit var authorizationApi: AuthorizationFeatureApi
 
     private val startDestination: String
-        get() = calculatorApi.route()
-//        get() = periodicTableApi.route()
+//        get() = calculatorApi.route()
+        get() = authorizationApi.route()
 
     private fun NavGraphBuilder.registerNavGraphs(navController: NavController) {
         calculatorApi.registerGraph(this, navController)
