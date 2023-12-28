@@ -24,7 +24,6 @@ import ru.spacestar.core_feature_api.InfoFeatureApi
 import ru.spacestar.core_feature_api.LogsListApi
 import ru.spacestar.core_feature_api.PeriodicTableFeatureApi
 import ru.spacestar.core_ui.theme.LogsViewerTheme
-import ru.spacestar.core_ui.view.AdBanner
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -82,10 +81,6 @@ class MainActivity : ComponentActivity() {
                         ) {
                             registerNavGraphs(navController)
                         }
-                        AdBanner(
-                            modifier = Modifier.fillMaxWidth(),
-                            unitId = BuildConfig.YAD_ID
-                        )
                     }
                 }
             }

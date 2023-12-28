@@ -85,10 +85,6 @@ dependencies {
     implementation "androidx.hilt:hilt-navigation-compose:$hilt_nav_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
-    // ads
-    implementation 'com.yandex.android:mobileads:5.8.0'
-    implementation 'com.yandex.ads.mediation:mobileads-admob:21.5.0.0'
-
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'

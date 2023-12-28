@@ -53,7 +53,4 @@ dependencies {
 
     // navigation
     implementation "androidx.navigation:navigation-compose:$nav_version"
-
-    // ads
-    implementation 'com.yandex.android:mobileads:5.8.0'
 }
