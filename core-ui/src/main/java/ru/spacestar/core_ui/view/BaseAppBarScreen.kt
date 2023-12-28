@@ -21,7 +21,7 @@ fun BaseAppBarScreen(
 ) {
     Scaffold(
         topBar = {
-            DictionaryAppBar(
+            LogsViewerAppBar(
                 title = title,
                 backIcon = backIcon,
                 onBackPressed = if (isBackEnabled) onBackPressed else null,

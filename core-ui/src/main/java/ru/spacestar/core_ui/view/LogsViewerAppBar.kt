@@ -17,7 +17,7 @@ import ru.spacestar.core_ui.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DictionaryAppBar(
+fun LogsViewerAppBar(
     title: String? = null,
     onBackPressed: (() -> Unit)? = null,
     backIcon: ImageVector = Icons.Filled.ArrowBack,

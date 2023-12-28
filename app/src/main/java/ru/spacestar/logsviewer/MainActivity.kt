@@ -1,4 +1,4 @@
-package ru.spacestar.dictionary
+package ru.spacestar.logsviewer
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -19,11 +19,10 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import ru.spacestar.core_feature_api.AuthorizationFeatureApi
 import ru.spacestar.core_feature_api.CalculatorFeatureApi
 import ru.spacestar.core_feature_api.InfoFeatureApi
 import ru.spacestar.core_feature_api.PeriodicTableFeatureApi
-import ru.spacestar.core_ui.theme.DictionaryTheme
+import ru.spacestar.core_ui.theme.LogsViewerTheme
 import ru.spacestar.core_ui.view.AdBanner
 import javax.inject.Inject
 
@@ -35,12 +34,10 @@ class MainActivity : ComponentActivity() {
     lateinit var infoApi: InfoFeatureApi
     @Inject
     lateinit var periodicTableApi: PeriodicTableFeatureApi
-    @Inject
-    lateinit var authorizationApi: AuthorizationFeatureApi
 
     private val startDestination: String
-//        get() = calculatorApi.route()
-        get() = authorizationApi.route()
+        get() = calculatorApi.route()
+//        get() = authorizationApi.route()
 
     private fun NavGraphBuilder.registerNavGraphs(navController: NavController) {
         calculatorApi.registerGraph(this, navController)
@@ -51,7 +48,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            DictionaryTheme {
+            LogsViewerTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),

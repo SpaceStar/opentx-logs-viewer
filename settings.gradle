@@ -12,7 +12,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Dictionary"
+rootProject.name = "LogsViewer"
 include ':app'
 include ':core'
 include ':core-ui'
@@ -20,4 +20,3 @@ include ':core-feature-api'
 include ':calculator-impl'
 include ':info-impl'
 include ':periodic-table-impl'
-include ':authorization'

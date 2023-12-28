@@ -1,4 +1,4 @@
-package ru.spacestar.dictionary
+package ru.spacestar.logsviewer
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace 'ru.spacestar.dictionary'
+    namespace 'ru.spacestar.logsviewer'
     compileSdk target_sdk
 
     defaultConfig {
-        applicationId "ru.spacestar.dictionary"
+        applicationId "ru.spacestar.logsviewer"
         minSdk min_sdk
         targetSdk target_sdk
         versionCode 1
