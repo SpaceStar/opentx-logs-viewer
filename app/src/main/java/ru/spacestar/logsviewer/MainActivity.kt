@@ -21,6 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.spacestar.core_feature_api.CalculatorFeatureApi
 import ru.spacestar.core_feature_api.InfoFeatureApi
+import ru.spacestar.core_feature_api.LogsListApi
 import ru.spacestar.core_feature_api.PeriodicTableFeatureApi
 import ru.spacestar.core_ui.theme.LogsViewerTheme
 import ru.spacestar.core_ui.view.AdBanner
@@ -34,15 +35,18 @@ class MainActivity : ComponentActivity() {
     lateinit var infoApi: InfoFeatureApi
     @Inject
     lateinit var periodicTableApi: PeriodicTableFeatureApi
+    @Inject
+    lateinit var logsListApi: LogsListApi
 
     private val startDestination: String
-        get() = calculatorApi.route()
-//        get() = authorizationApi.route()
+//        get() = calculatorApi.route()
+        get() = logsListApi.route()
 
     private fun NavGraphBuilder.registerNavGraphs(navController: NavController) {
         calculatorApi.registerGraph(this, navController)
         infoApi.registerGraph(this, navController)
         periodicTableApi.registerGraph(this, navController)
+        logsListApi.registerGraph(this, navController)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
