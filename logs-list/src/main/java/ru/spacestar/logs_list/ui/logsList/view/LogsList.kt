@@ -51,6 +51,8 @@ internal fun LogsList(
             is LogsListSideEffect.ShowMessage -> {
                 Toast.makeText(context, it.msgRes, Toast.LENGTH_SHORT).show()
             }
+
+            is LogsListSideEffect.Navigate -> navController.navigate(it.route)
         }
     })
 
@@ -86,7 +88,7 @@ internal fun LogsList(
                 LogItem(
                     modifier = Modifier.fillMaxWidth(),
                     state = it,
-                    onClick = { /* TODO() */ },
+                    onClick = { uri -> viewModel.selectLog(uri) },
                     onRemove = { uri ->  viewModel.deleteLog(uri) }
                 )
             }

@@ -16,7 +16,9 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import ru.spacestar.core.utils.StringExtensions.urlEncoded
 import ru.spacestar.logs_list.R
+import ru.spacestar.logs_list.navigation.LogsListApiImpl
 import ru.spacestar.logs_list.ui.logItem.LogItemState
 import java.io.File
 import javax.inject.Inject
@@ -29,6 +31,8 @@ internal class LogsListViewModel @Inject constructor(
 
     private val appContext: Context
         get() = getApplication()
+
+    private val logsListApi by lazy { LogsListApiImpl() }
 
     override val container = container<LogsListState, LogsListSideEffect>(LogsListState(), savedStateHandle) {
         loadLogsList()
@@ -77,6 +81,11 @@ internal class LogsListViewModel @Inject constructor(
         val file = uri.toFile()
         file.delete()
         loadLogsList()
+    }
+
+    fun selectLog(uri: Uri) = intent {
+        val route = logsListApi.details(uri.toString().urlEncoded)
+        postSideEffect(LogsListSideEffect.Navigate(route))
     }
 
     private fun getFileInfo(uri: Uri): FileInfo? {
