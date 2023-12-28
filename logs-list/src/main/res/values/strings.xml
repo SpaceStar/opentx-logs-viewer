@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_log_button">Добавить лог</string>
+    <string name="not_enough_space">Недостаточно памяти на устройстве</string>
+    <string name="delete_button">Удалить лог</string>
+</resources>

@@ -17,6 +17,7 @@ fun BaseAppBarScreen(
     isBackEnabled: Boolean = true,
     backIcon: ImageVector = Icons.Filled.ArrowBack,
     appBarMenu: @Composable RowScope.() -> Unit = {},
+    fab: @Composable () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit = {}
 ) {
     Scaffold(
@@ -28,6 +29,7 @@ fun BaseAppBarScreen(
                 actions = appBarMenu
             )
         },
+        floatingActionButton = fab,
         content = content
     )
 }
