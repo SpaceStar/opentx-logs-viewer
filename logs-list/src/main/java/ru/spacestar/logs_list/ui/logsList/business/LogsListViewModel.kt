@@ -1,22 +1,19 @@
 package ru.spacestar.logs_list.ui.logsList.business
 
-import android.app.Application
 import android.content.Context
 import android.net.Uri
 import android.os.storage.StorageManager
 import android.provider.OpenableColumns
 import androidx.core.net.toFile
 import androidx.core.net.toUri
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
-import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
-import org.orbitmvi.orbit.viewmodel.container
 import ru.spacestar.core.utils.StringExtensions.urlEncoded
+import ru.spacestar.core_ui.viewmodel.BaseSideEffect
+import ru.spacestar.core_ui.viewmodel.BaseViewModel
 import ru.spacestar.logs_list.R
 import ru.spacestar.logs_list.navigation.LogsListApiImpl
 import ru.spacestar.logs_list.ui.logItem.LogItemState
@@ -27,16 +24,14 @@ import javax.inject.Inject
 internal class LogsListViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     @ApplicationContext context: Context
-) : AndroidViewModel(context as Application), ContainerHost<LogsListState, LogsListSideEffect> {
+) : BaseViewModel<LogsListState, LogsListSideEffect>(context, savedStateHandle) {
 
     private val appContext: Context
         get() = getApplication()
 
     private val logsListApi by lazy { LogsListApiImpl() }
 
-    override val container = container<LogsListState, LogsListSideEffect>(LogsListState(), savedStateHandle) {
-        loadLogsList()
-    }
+    override val container = container(LogsListState()) { loadLogsList() }
 
     private fun loadLogsList() = intent {
         val logs = appContext.getDir(LOGS_SUBDIR, Context.MODE_PRIVATE).listFiles()?.map { file ->
@@ -85,7 +80,7 @@ internal class LogsListViewModel @Inject constructor(
 
     fun selectLog(uri: Uri) = intent {
         val route = logsListApi.details(uri.toString().urlEncoded)
-        postSideEffect(LogsListSideEffect.Navigate(route))
+        postSideEffect(BaseSideEffect.Navigate(route))
     }
 
     private fun getFileInfo(uri: Uri): FileInfo? {

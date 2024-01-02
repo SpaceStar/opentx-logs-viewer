@@ -10,4 +10,5 @@ internal data class LogDetailsState(
     val logName: String = "",
     val selectedEntry: Int = 0,
     val details: List<LogEntry> = emptyList(),
+    val showMap: Boolean = false
 ) : Parcelable

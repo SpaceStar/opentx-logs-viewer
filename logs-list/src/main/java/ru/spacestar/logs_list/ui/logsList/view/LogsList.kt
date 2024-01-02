@@ -27,6 +27,7 @@ import androidx.navigation.NavController
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 import ru.spacestar.core_ui.view.BaseAppBarScreen
+import ru.spacestar.core_ui.viewmodel.BaseSideEffect
 import ru.spacestar.logs_list.R
 import ru.spacestar.logs_list.ui.logItem.LogItem
 import ru.spacestar.logs_list.ui.logsList.business.LogsListSideEffect
@@ -48,11 +49,14 @@ internal fun LogsList(
 
     viewModel.collectSideEffect(sideEffect = {
         when (it) {
-            is LogsListSideEffect.ShowMessage -> {
-                Toast.makeText(context, it.msgRes, Toast.LENGTH_SHORT).show()
+            is BaseSideEffect.Navigate -> navController.navigate(it.route)
+            is BaseSideEffect.Other -> {
+                when (val sf = it.sf) {
+                    is LogsListSideEffect.ShowMessage -> {
+                        Toast.makeText(context, sf.msgRes, Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
-
-            is LogsListSideEffect.Navigate -> navController.navigate(it.route)
         }
     })
 
