@@ -29,9 +29,9 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 import ru.spacestar.core_ui.view.BaseAppBarScreen
 import ru.spacestar.core_ui.viewmodel.BaseSideEffect
 import ru.spacestar.logs_list.R
-import ru.spacestar.logs_list.ui.logItem.LogItem
 import ru.spacestar.logs_list.ui.logsList.business.LogsListSideEffect
 import ru.spacestar.logs_list.ui.logsList.business.LogsListViewModel
+import ru.spacestar.logs_list.ui.views.logItem.LogItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

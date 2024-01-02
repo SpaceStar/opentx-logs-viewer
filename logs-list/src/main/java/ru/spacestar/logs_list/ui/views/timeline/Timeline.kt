@@ -1,4 +1,4 @@
-package ru.spacestar.logs_list.ui.timeline
+package ru.spacestar.logs_list.ui.views.timeline
 
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar

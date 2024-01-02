@@ -16,7 +16,7 @@ import ru.spacestar.core_ui.viewmodel.BaseSideEffect
 import ru.spacestar.core_ui.viewmodel.BaseViewModel
 import ru.spacestar.logs_list.R
 import ru.spacestar.logs_list.navigation.LogsListApiImpl
-import ru.spacestar.logs_list.ui.logItem.LogItemState
+import ru.spacestar.logs_list.ui.views.logItem.LogItemState
 import java.io.File
 import javax.inject.Inject
 

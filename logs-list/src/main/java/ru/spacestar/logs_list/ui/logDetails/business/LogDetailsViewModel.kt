@@ -14,7 +14,7 @@ import ru.spacestar.core.utils.StringExtensions.decodeFromUrl
 import ru.spacestar.core_ui.viewmodel.BaseSideEffect
 import ru.spacestar.core_ui.viewmodel.BaseViewModel
 import ru.spacestar.logs_list.navigation.LogsListApiImpl
-import ru.spacestar.logs_list.ui.logEntry.LogEntry
+import ru.spacestar.logs_list.ui.views.logEntry.LogEntry
 import java.util.Locale
 import javax.inject.Inject
 

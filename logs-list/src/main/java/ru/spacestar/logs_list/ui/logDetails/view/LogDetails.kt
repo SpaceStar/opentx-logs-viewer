@@ -21,8 +21,8 @@ import ru.spacestar.core_ui.view.FloatingActionButton
 import ru.spacestar.core_ui.view.IconButton
 import ru.spacestar.logs_list.R
 import ru.spacestar.logs_list.ui.logDetails.business.LogDetailsViewModel
-import ru.spacestar.logs_list.ui.logEntry.LogEntryInfo
-import ru.spacestar.logs_list.ui.timeline.Timeline
+import ru.spacestar.logs_list.ui.views.logEntry.LogEntryInfo
+import ru.spacestar.logs_list.ui.views.timeline.Timeline
 
 @Composable
 internal fun LogDetails(

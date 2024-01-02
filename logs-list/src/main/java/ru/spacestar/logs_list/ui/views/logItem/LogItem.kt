@@ -1,4 +1,4 @@
-package ru.spacestar.logs_list.ui.logItem
+package ru.spacestar.logs_list.ui.views.logItem
 
 import android.net.Uri
 import androidx.compose.foundation.BorderStroke

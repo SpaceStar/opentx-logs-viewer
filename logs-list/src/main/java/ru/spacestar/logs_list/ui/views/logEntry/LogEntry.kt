@@ -1,4 +1,4 @@
-package ru.spacestar.logs_list.ui.logEntry
+package ru.spacestar.logs_list.ui.views.logEntry
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
