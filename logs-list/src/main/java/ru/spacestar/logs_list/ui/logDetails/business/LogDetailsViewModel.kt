@@ -24,6 +24,8 @@ internal class LogDetailsViewModel @Inject constructor(
     @ApplicationContext context: Context
 ) : BaseViewModel<LogDetailsState, Any>(context, savedStateHandle) {
 
+    private val logsListApi by lazy { LogsListApiImpl() }
+
     override val container = container(LogDetailsState(loading = true)) {
         val uri: String = checkNotNull(savedStateHandle[LogsListApiImpl.DETAILS_ARG_URI])
         val file = Uri.parse(uri.decodeFromUrl).toFile()
@@ -64,7 +66,7 @@ internal class LogDetailsViewModel @Inject constructor(
     }
 
     fun openSettings() = intent {
-        postSideEffect(BaseSideEffect.Navigate(TODO("настройки карты")))
+        postSideEffect(BaseSideEffect.Navigate(logsListApi.mapSettings()))
     }
 
     private fun prepareLog(logData: List<Map<String, String>>): List<LogEntry> {

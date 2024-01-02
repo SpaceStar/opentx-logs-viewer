@@ -26,15 +26,12 @@ internal class LogsListViewModel @Inject constructor(
     @ApplicationContext context: Context
 ) : BaseViewModel<LogsListState, LogsListSideEffect>(context, savedStateHandle) {
 
-    private val appContext: Context
-        get() = getApplication()
-
     private val logsListApi by lazy { LogsListApiImpl() }
 
     override val container = container(LogsListState()) { loadLogsList() }
 
     private fun loadLogsList() = intent {
-        val logs = appContext.getDir(LOGS_SUBDIR, Context.MODE_PRIVATE).listFiles()?.map { file ->
+        val logs = context.getDir(LOGS_SUBDIR, Context.MODE_PRIVATE).listFiles()?.map { file ->
             val name = file.name
             val date = file.lastModified()
             val uri = file.toUri()
@@ -52,8 +49,8 @@ internal class LogsListViewModel @Inject constructor(
         val file = getFileInfo(uri) ?: return@intent
 
         // check free space
-        val storageManager = appContext.getSystemService(StorageManager::class.java)
-        val dirUuid = storageManager.getUuidForPath(appContext.filesDir)
+        val storageManager = context.getSystemService(StorageManager::class.java)
+        val dirUuid = storageManager.getUuidForPath(context.filesDir)
         val availableSpace = storageManager.getAllocatableBytes(dirUuid)
         if (availableSpace >= file.size) {
             storageManager.allocateBytes(dirUuid, file.size)
@@ -62,8 +59,8 @@ internal class LogsListViewModel @Inject constructor(
         }
 
         // copy file to app-specific storage
-        appContext.contentResolver.openInputStream(uri)?.use { input ->
-            val dir = appContext.getDir(LOGS_SUBDIR, Context.MODE_PRIVATE)
+        context.contentResolver.openInputStream(uri)?.use { input ->
+            val dir = context.getDir(LOGS_SUBDIR, Context.MODE_PRIVATE)
             val localFile = resolveFilename(File(dir, file.name))
             localFile.outputStream().use { output ->
                 input.copyTo(output)
@@ -84,7 +81,7 @@ internal class LogsListViewModel @Inject constructor(
     }
 
     private fun getFileInfo(uri: Uri): FileInfo? {
-        return appContext.contentResolver
+        return context.contentResolver
             .query(uri, null, null, null, null).use { cursor ->
                 if (cursor?.moveToFirst() != true) return null
                 val name = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)

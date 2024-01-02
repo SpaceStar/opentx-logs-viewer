@@ -16,9 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 import ru.spacestar.core_ui.view.BaseAppBarScreen
 import ru.spacestar.core_ui.view.FloatingActionButton
 import ru.spacestar.core_ui.view.IconButton
+import ru.spacestar.core_ui.viewmodel.BaseSideEffect
 import ru.spacestar.logs_list.R
 import ru.spacestar.logs_list.ui.logDetails.business.LogDetailsViewModel
 import ru.spacestar.logs_list.ui.views.logEntry.LogEntryInfo
@@ -30,6 +32,13 @@ internal fun LogDetails(
     viewModel: LogDetailsViewModel
 ) {
     val state by viewModel.collectAsState()
+
+    viewModel.collectSideEffect {
+        when (it) {
+            is BaseSideEffect.Navigate -> navController.navigate(it.route)
+            is BaseSideEffect.Other -> Unit
+        }
+    }
 
     BaseAppBarScreen(
         navController = navController,
