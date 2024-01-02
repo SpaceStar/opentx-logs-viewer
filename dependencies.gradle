@@ -13,4 +13,5 @@ ext {
     compose_activity_version = '1.8.2'
     compose_version = '2023.10.01'
     room_version = '2.6.1'
+    csv_version = '1.9.2'
 }

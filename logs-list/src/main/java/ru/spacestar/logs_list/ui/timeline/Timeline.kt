@@ -1,4 +1,4 @@
-package ru.spacestar.logs_list.ui
+package ru.spacestar.logs_list.ui.timeline
 
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
@@ -116,6 +116,7 @@ fun Timeline(
 
     Canvas(
         modifier = modifier
+            .fillMaxWidth()
             .background(Color.Gray.copy(alpha = 0.4f))
             .transformable(transformListener)
     ) {
